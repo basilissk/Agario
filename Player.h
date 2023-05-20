@@ -10,7 +10,7 @@ public:
 	float size;
 	float speed;
 	bool life;
-	CircleShape playerBody;
+	sf::CircleShape playerBody;
 
 	void move();
 
@@ -19,6 +19,8 @@ public:
 	float getPlayerCoordY();
 
 	float getPlayerSize();
+
+	void setPlayerSize(float size);
 
 	void eatingFood(Player p);
 

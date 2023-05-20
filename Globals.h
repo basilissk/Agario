@@ -1,8 +1,11 @@
 #pragma once
-#include "Food.h"
 #include "SFML/Graphics.hpp"
+#include "Enemy.h"
+#include "Player.h"
+#include "Food.h"
 
 using namespace sf;
+using namespace std;
 
 const int windowHeight = 1000;
 const int windowWidth = 1500;
@@ -32,5 +35,7 @@ extern Color colorArray[10];
 
 extern RenderWindow window;
 extern Event event;
+extern Texture menuBackgroundT;
+
 
 

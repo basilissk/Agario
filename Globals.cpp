@@ -21,3 +21,11 @@ Color colorArray[10] = { Color(255, 0, 0), Color(0, 255, 0), Color(0, 255, 255),
 
 RenderWindow window(VideoMode(windowWidth, windowHeight), "Agar.io", Style::Default);
 Event event;
+
+Texture menuBackgroundT;
+
+struct GameState
+{
+	Enemy enemies_arr[9];
+	Food food_arr[300];
+};

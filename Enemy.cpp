@@ -194,6 +194,11 @@ float Enemy::getPlayerSize() {
 	return size;
 }
 
+CircleShape Enemy::getPlayerColor()
+{
+	return CircleShape();
+}
+
 void Enemy::eatingFood(Enemy p) {
 	float xP = p.getPlayerCoordX();
 	float yP = p.getPlayerCoordY();

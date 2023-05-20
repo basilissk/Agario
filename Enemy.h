@@ -2,9 +2,9 @@
 #include "SFML/Graphics.hpp"
 #include "Globals.h"
 #include "Player.h"
+#include "Food.h"
 
-using namespace sf;
-
+class Player;
 
 class Enemy {
 public:
@@ -13,7 +13,7 @@ public:
 	float size;
 	float speed;
 	bool life;
-	CircleShape enemyBody;
+	sf::CircleShape enemyBody;
 
 	void pos(float X, float Y);
 
@@ -25,10 +25,12 @@ public:
 
 	float getPlayerSize();
 
+	sf::CircleShape getPlayerColor();
+
 	void eatingFood(Enemy p);
 
 	int getDir(float xE, float yE, float xF, float yF);
 
 };
 
-extern Enemy enemyArr[enemyAmount];
+extern Enemy enemyArr[];
