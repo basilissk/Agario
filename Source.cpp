@@ -60,7 +60,7 @@ int main() {
 
 					zoom = 0;
 					lineWidth = 0.2;
-					view.setSize(windowWidth / 4, windowHeight / 4);
+					view.setSize(windowWidth / 1, windowHeight / 1);
 					drawingDistance = 200;
 
 					lines.setFillColor(Color(192, 192, 192));
@@ -70,16 +70,15 @@ int main() {
 					server.WaitingClients();
 
 					for (Client* client : server.clients) {
-						Player player;
+						Player* player = new Player;
 						Packet PlayerPacket;
-						float PlayerSize;
 						PlayerPacket = client->getClientPacket();
-						PlayerPacket >> player.x >> player.y >> player.size >> player.speed >> player.life >> PlayerSize;
-						PlayerPacket >> colorInteger;
-						player.playerBody.setRadius(PlayerSize);
-						player.playerBody.setFillColor(Color(colorTemp));
-						players.push_back(&player);
+						PlayerPacket >> player->x >> player->y >> player->size >> player->speed >> player->life >> colorInteger;
+						player->playerBody.setRadius(player->size);
+						player->playerBody.setFillColor(Color(colorInteger));
+						players.push_back(player);
 					}
+
 					Player player;
 					player.x = rand() % 900 + 50;
 					player.y = rand() % 900 + 50;
@@ -123,7 +122,6 @@ int main() {
 						colorTemp = enemyArr[i].enemyBody.getFillColor();
 						enemiesPacket << colorTemp.toInteger();
 
-						//printf_s("%d enemy:\nx:%f y:%f",i, enemyArr[i].x, enemyArr[i].y);
 					}
 
 					server.SendPacketToAllClients(enemiesPacket);
@@ -163,10 +161,10 @@ int main() {
 
 						}
 
-						player.move();
-						/*for (Player* player : players) {
+						//player.move();
+						for (Player* player : players) {
 							player->move();
-						}*/
+						}
 
 						window.clear(Color(153, 153, 255));
 						window.draw(background);
@@ -217,14 +215,21 @@ int main() {
 						}
 
 						for (int i = 0; i < enemyAmount; i++) {
-							if (enemyArr[i].life == true)
-								window.draw(enemyArr[i].enemyBody);
+							if (enemyArr[i].life == true) {
+								//window.draw(enemyArr[i].enemyBody);
+							}
 						}
 
+						//window.draw(player.playerBody);
+						/*if (players[0] != nullptr) {
+							CircleShape tempBody = players[0]->playerBody;
+							window.draw(tempBody);
+						}*/
+						for (Player* player : players) {
+							window.draw(player->playerBody);
+						}
 
-						window.draw(player.playerBody);
 						window.display();
-
 
 						if (!player.life) isThePlayerDied = true;
 
