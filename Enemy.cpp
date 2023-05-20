@@ -10,176 +10,176 @@ void Enemy::pos(float X, float Y) {
 
 void Enemy::move(Player A, Enemy B, Food Arr[]) {
 
-	float xA = A.getPlayerCoordX();
-	float yA = A.getPlayerCoordY();
-	float xB = B.getPlayerCoordX();
-	float yB = B.getPlayerCoordY();
-	float tmp;
-	bool toPlayer = false;
-	bool fromPlayer = false;
+		float xA = A.getPlayerCoordX();
+		float yA = A.getPlayerCoordY();
+		float xB = B.getPlayerCoordX();
+		float yB = B.getPlayerCoordY();
+		float tmp;
+		bool toPlayer = false;
+		bool fromPlayer = false;
 
-	speed = speedCoeff / sqrt(sqrt(size));
+		speed = speedCoeff / sqrt(sqrt(size));
 
-	if (B.getPlayerSize() >= A.getPlayerSize()) {
+		if (B.getPlayerSize() >= A.getPlayerSize()) {
 
-		if (abs(xA - xB) < 120 + size && abs(yA - yB) < 120 + size) {
+			if (abs(xA - xB) < 120 + size && abs(yA - yB) < 120 + size) {
 
-			toPlayer = true;
+				toPlayer = true;
 
-			tmp = abs(xA - xB);
-			if (abs(xA - xB + 1) < tmp)
+				tmp = abs(xA - xB);
+				if (abs(xA - xB + 1) < tmp)
+				{
+					if (x - speed - size > 0)
+					{
+						xB -= speed;
+						x = xB;
+					}
+				}
+				tmp = abs(xA - xB);
+				if (abs(xA - xB - 1) < tmp)
+				{
+					if (x + speed + size < mapWidth)
+					{
+						xB += speed;
+						x = xB;
+					}
+				}
+
+				tmp = abs(yA - yB);
+				if (abs(yA - yB + 1) < tmp)
+				{
+					if (y - speed - size > 0)
+					{
+						yB -= speed;
+						y = yB;
+					}
+				}
+				tmp = abs(yA - yB);
+				if (abs(yA - yB - 1) < tmp)
+				{
+					if (y + speed + size < mapHeight)
+					{
+						yB += speed;
+						y = yB;
+					}
+				}
+			}
+		}
+
+		if (B.getPlayerSize() < A.getPlayerSize()) {
+
+			if (abs(xA - xB) < 45 + size && abs(yA - yB) < 45 + size) {
+
+				fromPlayer = true;
+				tmp = abs(xA - xB);
+				if (abs(xA - xB + 1) > tmp)
+				{
+					if (x - speed - size > 0)
+					{
+						xB -= speed;
+						x = xB;
+					}
+				}
+
+				tmp = abs(xA - xB);
+				if (abs(xA - xB - 1) > tmp)
+				{
+					if (x + speed + size < mapWidth)
+					{
+						xB += speed;
+						x = xB;
+					}
+				}
+
+				tmp = abs(yA - yB);
+				if (abs(yA - yB + 1) > tmp)
+				{
+					if (y - speed - size > 0)
+					{
+						yB -= speed;
+						y = yB;
+					}
+				}
+				tmp = abs(yA - yB);
+				if (abs(yA - yB - 1) > tmp)
+				{
+					if (y + speed + size < mapHeight)
+					{
+						yB += speed;
+						y = yB;
+					}
+				}
+			}
+		}
+
+		if (!toPlayer && !fromPlayer) {
+
+			int index = 0;
+			int j = 0;
+			tmp = 0;
+
+			while (Arr[j].life == false) j++;
+			float temp = getDir(xB, yB, Arr[j].x, Arr[j].y);
+
+			for (int i = 0; i <= foodAmount; i++)
+			{
+				if (getDir(xB, yB, Arr[i].x, Arr[i].y) < temp && Arr[i].life == true)
+				{
+					temp = getDir(xB, yB, Arr[i].x, Arr[i].y);
+					index = i;
+				}
+			}
+
+			temp = 0;
+
+			tmp = index;
+
+			tmp = abs(Arr[index].x - xB);
+			if (abs(Arr[index].x - xB + 1) < tmp)
 			{
 				if (x - speed - size > 0)
 				{
 					xB -= speed;
 					x = xB;
+
 				}
 			}
-			tmp = abs(xA - xB);
-			if (abs(xA - xB - 1) < tmp)
+			tmp = abs(Arr[index].x - xB);
+			if (abs(Arr[index].x - xB - 1) < tmp)
+
 			{
 				if (x + speed + size < mapWidth)
 				{
 					xB += speed;
 					x = xB;
+
 				}
 			}
-			
-			tmp = abs(yA - yB);
-			if (abs(yA - yB + 1) < tmp)
+
+			tmp = abs(Arr[index].y - yB);
+			if (abs(Arr[index].y - yB + 1) < tmp)
 			{
 				if (y - speed - size > 0)
 				{
 					yB -= speed;
 					y = yB;
+
 				}
 			}
-			tmp = abs(yA - yB);
-			if (abs(yA - yB - 1) < tmp)
+			tmp = abs(Arr[index].y - yB);
+			if (abs(Arr[index].y - yB - 1) < tmp)
 			{
 				if (y + speed + size < mapHeight)
 				{
 					yB += speed;
 					y = yB;
+
 				}
 			}
 		}
-	}
 
-	if (B.getPlayerSize() < A.getPlayerSize()) {
-
-		if (abs(xA - xB) < 45 + size && abs(yA - yB) < 45 + size) {
-
-			fromPlayer = true;
-			tmp = abs(xA - xB);
-			if (abs(xA - xB + 1) > tmp)
-			{
-				if (x - speed - size > 0)
-				{
-					xB -= speed;
-					x = xB;
-				}
-			}
-
-			tmp = abs(xA - xB);
-			if (abs(xA - xB - 1) > tmp)
-			{
-				if (x + speed + size < mapWidth)
-				{
-					xB += speed;
-					x = xB;
-				}
-			}
-
-			tmp = abs(yA - yB);
-			if (abs(yA - yB + 1) > tmp)
-			{
-				if (y - speed - size > 0)
-				{
-					yB -= speed;
-					y = yB;
-				}
-			}
-			tmp = abs(yA - yB);
-			if (abs(yA - yB - 1) > tmp)
-			{
-				if (y + speed + size < mapHeight)
-				{
-					yB += speed;
-					y = yB;
-				}
-			}
-		}
-	}
-
-	if (!toPlayer && !fromPlayer) {
-
-		int index = 0;
-		int j = 0;
-		tmp = 0;
-
-		while (Arr[j].life == false) j++;
-		float temp = getDir(xB, yB, Arr[j].x, Arr[j].y);
-
-		for (int i = 0; i <= foodAmount; i++)
-		{
-			if (getDir(xB, yB, Arr[i].x, Arr[i].y) < temp && Arr[i].life == true)
-			{
-				temp = getDir(xB, yB, Arr[i].x, Arr[i].y);
-				index = i;
-			}
-		}
-
-		temp = 0;
-
-		tmp = index;
-
-		tmp = abs(Arr[index].x - xB);
-		if (abs(Arr[index].x - xB + 1) < tmp)
-		{
-			if (x - speed - size > 0)
-			{
-				xB -= speed;
-				x = xB;
-
-			}
-		}
-		tmp = abs(Arr[index].x - xB);
-		if (abs(Arr[index].x - xB - 1) < tmp)
-
-		{
-			if (x + speed + size < mapWidth)
-			{
-				xB += speed;
-				x = xB;
-
-			}
-		}
-
-		tmp = abs(Arr[index].y - yB);
-		if (abs(Arr[index].y - yB + 1) < tmp)
-		{
-			if (y - speed - size > 0)
-			{
-				yB -= speed;
-				y = yB;
-
-			}
-		}
-		tmp = abs(Arr[index].y - yB);
-		if (abs(Arr[index].y - yB - 1) < tmp)
-		{
-			if (y + speed + size < mapHeight)
-			{
-				yB += speed;
-				y = yB;
-
-			}
-		}
-	}
-
-	enemyBody.setPosition(x - size, y - size);
-	enemyBody.setRadius(size);
+		enemyBody.setPosition(x - size, y - size);
+		enemyBody.setRadius(size);
 }
 
 float Enemy::getPlayerCoordX() {
