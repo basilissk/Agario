@@ -10,7 +10,7 @@ public:
 	void StartServer();
 	void WaitingClients();
 	void SendPacketToAllClients(sf::Packet packet);
-	void SendMessageW();
+	void SendPacketToClient(sf::Packet packet, Client* client);
 	std::vector<Client*> clients;
 };
 

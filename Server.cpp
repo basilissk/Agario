@@ -22,7 +22,7 @@ void Server::WaitingClients()
     while (clients.size() < 1) {
         // Ожидание и обработка подключений
         TcpSocket* tcp_client = new TcpSocket;
-        int Id = 1;
+        int Id = 0;
         if (listener->accept(*tcp_client) != sf::Socket::Done) {
             std::cout << "Ошибка при принятии подключения." << std::endl;
             continue;
@@ -48,14 +48,9 @@ void Server::SendPacketToAllClients(Packet packet)
     }
 }
 
-void Server::SendMessageW()
+void Server::SendPacketToClient(sf::Packet packet, Client* client)
 {
-    for (Client *client : clients) {
-        sf::TcpSocket *temp = client->GetSocket();
-        Packet packet;
-        packet << "hello";
-        temp->send(packet);
-
-    }
-   
+    sf::TcpSocket* temp = client->GetSocket();
+    temp->send(packet);
 }
+

@@ -426,7 +426,9 @@ void eatingEnemy(Player& p, Enemy& e) {
 
 	if (S1 < S2) {
 		if ((((X1 <= X2) && (X1 >= X2 - S2)) || ((X1 >= X2) && (X1 <= X2 + S2))) &&
-			(((Y1 <= Y2) && (Y1 >= Y2 - S2)) || ((Y1 >= Y2) && (Y1 <= Y2 + S2))))
+			(((Y1 <= Y2) && (Y1 >= Y2 - S2)) || ((Y1 >= Y2) && (Y1 <= Y2 + S2)))) {
 			p.life = false;
+			printf("йрн рн ядну");
+		}
 	}
 }

@@ -17,9 +17,9 @@ public:
 
 	void pos(float X, float Y);
 
-	void move(Player A, Enemy B, Food Arr[]);
+	void move(std::vector<Player*>& players, Enemy B, Food Arr[]);
 
-	float getPlayerCoordX();
+	float getPlayerCoordX();	
 
 	float getPlayerCoordY();
 

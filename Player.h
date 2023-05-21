@@ -20,8 +20,10 @@ public:
 
 	float getPlayerSize();
 
+	void SetPlayerBody();
+
 	void setPlayerSize(float size);
 
-	void eatingFood(Player p);
+	void eatingFood();
 
 };

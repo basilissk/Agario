@@ -32,9 +32,7 @@ int main() {
 	UINT32 colorInteger;
 	Color colorTemp;
 
-	GameState packet;
-
-	string buffer;
+	Packet playerCoordinatePacket;
 
 	vector<Player*> players;
 
@@ -145,15 +143,13 @@ int main() {
 
 						isAllEnemiesDied = false;
 
-						while (window.pollEvent(event))
-						{
+						while (window.pollEvent(event)) {
 							if (event.type == Event::Closed)
 								window.close();
 						}
 
 						window.setView(view);
-						if (player.size > 40)
-						{
+						if (player.size > 40) {
 							view.setSize(windowWidth / 2, windowHeight / 2);
 							zoom = 8;
 							lineWidth = 0.4;
@@ -161,26 +157,43 @@ int main() {
 
 						}
 
-						//player.move();
-						for (Player* player : players) {
+						player.move();
+						/*for (Player* player : players) {
 							player->move();
+						}*/
+
+						playerCoordinatePacket.clear();
+
+						for (Client* client : server.clients) {
+							if (players[client->GetId()]->life == true) {
+								playerCoordinatePacket = client->getClientPacket();
+								playerCoordinatePacket >> players[client->GetId()]->x;
+								playerCoordinatePacket >> players[client->GetId()]->y;
+								players[client->GetId()]->SetPlayerBody();
+							}
 						}
+						
+						//players[0]->move();
 
 						window.clear(Color(153, 153, 255));
 						window.draw(background);
 
 						for (int i = 0; i < enemyAmount; i++) {
 							if (enemyArr[i].life == true) {
-								enemyArr[i].move(player, enemyArr[i], foodArr);
+								enemyArr[i].move(players, enemyArr[i], foodArr);
 							}
 						}
 
 						for (int i = 0; i < enemyAmount; i++) {
-							eatingEnemy(player, enemyArr[i]);
+							for (Player* player : players)
+								if (player->life == true)
+									eatingEnemy(*player, enemyArr[i]);
 
 						}
 
-						player.eatingFood(player);
+						for (Player* player : players)
+							if (player->life == true)
+							player->eatingFood();
 
 						for (int i = 0; i < enemyAmount; i++) {
 							if (enemyArr[i].life == true)
@@ -216,20 +229,53 @@ int main() {
 
 						for (int i = 0; i < enemyAmount; i++) {
 							if (enemyArr[i].life == true) {
-								//window.draw(enemyArr[i].enemyBody);
+								window.draw(enemyArr[i].enemyBody);
 							}
 						}
 
-						//window.draw(player.playerBody);
-						/*if (players[0] != nullptr) {
-							CircleShape tempBody = players[0]->playerBody;
-							window.draw(tempBody);
-						}*/
+
 						for (Player* player : players) {
-							window.draw(player->playerBody);
+							if (player->life == true)
+								window.draw(player->playerBody);
 						}
 
 						window.display();
+
+
+						//////////////////////////////////////////////////////////////////////
+
+
+						enemiesPacket.clear();
+						enemiesPacket << enemyAmount;
+
+						for (int i = 0; i < enemyAmount; i++) {
+							enemiesPacket << enemyArr[i].x;
+							enemiesPacket << enemyArr[i].y;
+							enemiesPacket << enemyArr[i].size;
+							enemiesPacket << enemyArr[i].speed;
+							enemiesPacket << enemyArr[i].life;
+
+							colorTemp = enemyArr[i].enemyBody.getFillColor();
+							enemiesPacket << colorTemp.toInteger();
+
+						}
+
+						foodPacket.clear();
+						foodPacket << foodAmount;
+
+						for (int i = 0; i < foodAmount; i++) {
+							foodPacket << foodArr[i].x;
+							foodPacket << foodArr[i].y;
+							foodPacket << foodArr[i].life;
+
+							colorTemp = foodArr[i].color;
+							foodPacket << colorTemp.toInteger();
+						}
+
+						server.SendPacketToAllClients(enemiesPacket);
+						server.SendPacketToAllClients(foodPacket);
+
+
 
 						if (!player.life) isThePlayerDied = true;
 
