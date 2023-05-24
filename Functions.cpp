@@ -1,5 +1,4 @@
 #include "Functions.h"
-#include "Connection.h"
 #include <cstring>
 #include <thread>
 #include <future>
@@ -30,6 +29,130 @@ void buttonNotSelected(Text& text, RectangleShape& button) {
 	text.setFillColor(Color(51, 255, 153));
 	text.setCharacterSize(75);
 	text.setPosition(button.getPosition());
+}
+
+void DrawingConnection()
+{
+	bool backPressed = false;
+	bool connected = false;
+	Texture rulesT;
+	Texture backT;
+	Texture menuT;
+	Texture menuBackgroundT;
+	Sprite back;
+	Sprite menu;
+	Sprite menuBackground;
+	Text text("", font);
+	backT.loadFromFile("resources\\back.png");
+	menuT.loadFromFile("resources\\menuRect.png");
+	menuBackgroundT.loadFromFile("resources\\menu.png");
+	menuBackground.setTexture(menuBackgroundT);
+	menuBackground.setScale(0.5, 0.5);
+	menu.setTexture(menuT);
+	menu.setScale(1.3, 1.3);
+	menu.setColor(Color(255, 255, 255, 230));
+	menu.setPosition(windowWidth / 4, windowHeight / 10);
+	back.setTexture(backT);
+	back.setScale(0.2, 0.2);
+	back.setPosition(30, 30);
+	text.setPosition(580, 500);
+	text.setFillColor(Color(0, 0, 0, 255));
+
+	wstring inscriptions[4] = { L"Подключение к серверу...", L"Ошибка подключения", L"Подключено игроков 1/2...", L"Подключено игроков 2/2!" };
+
+	enum conditions { Connecting, Error, Connection, Connection2 };
+	conditions condition = Connecting;
+
+	bool all_players_connected = false;
+
+	text.setString(inscriptions[0]);
+
+	//sock_sockaddr_in* sock_and_addr = CreateSocket();
+	//if (sock_and_addr == NULL) {
+		// Обработка ошибки
+	//}
+
+	/*thread tryingConnect([&]()
+		{
+			if (TryingToConnect(sock_and_addr->sock, sock_and_addr->serv_addr) == true) {
+				sock_and_addr->sock;
+				condition = Connection;
+			}
+			else
+				condition = Error;
+		});*/
+
+		/*thread waitingPlayers([&]()
+			{
+				if (WaitingForPlayers(sock_and_addr->sock)) {
+					all_players_connected = true;
+					condition = Connection2;
+				};
+			});*/
+
+
+	while (!backPressed) {
+
+		while (window.pollEvent(event))
+		{
+			if (event.type == Event::Closed)
+				window.close();
+		}
+
+		switch (condition)
+		{
+		case Connecting:
+			text.setString(inscriptions[0]);
+			break;
+		case Error:
+			text.setString(inscriptions[1]);
+			break;
+		case Connection:
+			text.setString(inscriptions[2]);
+			break;
+		case Connection2:
+			text.setString(inscriptions[3]);
+			break;
+		default:
+			break;
+		}
+
+		/*if (condition == Connection && !all_players_connected) {
+			if (WaitingForPlayers(sock_and_addr->sock)) {
+				all_players_connected = true;
+				condition = Connection2;
+			};
+		}*/
+
+		window.clear();
+		window.draw(menuBackground);
+		window.draw(menu);
+		window.draw(back);
+		window.draw(text);
+		window.display();
+
+		if (IntRect(30, 30, 130, 130).contains(Mouse::getPosition(window)))
+		{
+			back.setScale(0.25, 0.25);
+			back.setPosition(18, 18);
+			if (Mouse::isButtonPressed(Mouse::Left)) {
+				backPressed = true;
+			};
+		}
+		else
+		{
+			back.setScale(0.2, 0.2);
+			back.setPosition(30, 30);
+		}
+		if (Keyboard::isKeyPressed(Keyboard::BackSpace)) backPressed = true;
+
+		/*	if (all_players_connected) {
+				tryingConnect.join();
+				return sock_and_addr->sock;
+			}*/
+
+	}
+	//tryingConnect.join();
 }
 
 int drawingMenu() {
@@ -152,132 +275,132 @@ int drawingMenu() {
 	}
 }
 
-int DrawingConnection() {
-	bool backPressed = false;
-	bool connected = false;
-	Texture rulesT;
-	Texture backT;
-	Texture menuT;
-	Texture menuBackgroundT;
-	Sprite back;
-	Sprite menu;
-	Sprite menuBackground;
-	Text text("", font);
-	backT.loadFromFile("resources\\back.png");
-	menuT.loadFromFile("resources\\menuRect.png");
-	menuBackgroundT.loadFromFile("resources\\menu.png");
-	menuBackground.setTexture(menuBackgroundT);
-	menuBackground.setScale(0.5, 0.5);
-	menu.setTexture(menuT);
-	menu.setScale(1.3, 1.3);
-	menu.setColor(Color(255, 255, 255, 230));
-	menu.setPosition(windowWidth / 4, windowHeight / 10);
-	back.setTexture(backT);
-	back.setScale(0.2, 0.2);
-	back.setPosition(30, 30);
-	text.setPosition(580, 500);
-	text.setFillColor(Color(0, 0, 0, 255));
+//int DrawingConnection() {
+	//bool backPressed = false;
+	//bool connected = false;
+	//Texture rulesT;
+	//Texture backT;
+	//Texture menuT;
+	//Texture menuBackgroundT;
+	//Sprite back;
+	//Sprite menu;
+	//Sprite menuBackground;
+	//Text text("", font);
+	//backT.loadFromFile("resources\\back.png");
+	//menuT.loadFromFile("resources\\menuRect.png");
+	//menuBackgroundT.loadFromFile("resources\\menu.png");
+	//menuBackground.setTexture(menuBackgroundT);
+	//menuBackground.setScale(0.5, 0.5);
+	//menu.setTexture(menuT);
+	//menu.setScale(1.3, 1.3);
+	//menu.setColor(Color(255, 255, 255, 230));
+	//menu.setPosition(windowWidth / 4, windowHeight / 10);
+	//back.setTexture(backT);
+	//back.setScale(0.2, 0.2);
+	//back.setPosition(30, 30);
+	//text.setPosition(580, 500);
+	//text.setFillColor(Color(0, 0, 0, 255));
 
-	wstring inscriptions[4] = { L"Подключение к серверу...", L"Ошибка подключения", L"Подключено игроков 1/2...", L"Подключено игроков 2/2!" };
+	//wstring inscriptions[4] = { L"Подключение к серверу...", L"Ошибка подключения", L"Подключено игроков 1/2...", L"Подключено игроков 2/2!" };
 
-	enum conditions {Connecting, Error, Connection, Connection2};
-	conditions condition = Connecting;
+	//enum conditions {Connecting, Error, Connection, Connection2};
+	//conditions condition = Connecting;
 
-	bool all_players_connected = false;
+	//bool all_players_connected = false;
 
-	text.setString(inscriptions[0]);
+	//text.setString(inscriptions[0]);
 
-	sock_sockaddr_in* sock_and_addr = CreateSocket();
-	if (sock_and_addr == NULL) {
-		// Обработка ошибки
-	}
-	
-	thread tryingConnect([&]()
-		{
-			if (TryingToConnect(sock_and_addr->sock, sock_and_addr->serv_addr) == true) {
-				sock_and_addr->sock;
-				condition = Connection;
-			}
-			else
-				condition = Error;
-		});
+	//sock_sockaddr_in* sock_and_addr = CreateSocket();
+	//if (sock_and_addr == NULL) {
+	//	// Обработка ошибки
+	//}
+	//
+	//thread tryingConnect([&]()
+	//	{
+	//		if (TryingToConnect(sock_and_addr->sock, sock_and_addr->serv_addr) == true) {
+	//			sock_and_addr->sock;
+	//			condition = Connection;
+	//		}
+	//		else
+	//			condition = Error;
+	//	});
 
-	/*thread waitingPlayers([&]()
-		{
-			if (WaitingForPlayers(sock_and_addr->sock)) {
-				all_players_connected = true;
-				condition = Connection2;
-			};
-		});*/
-	
+	///*thread waitingPlayers([&]()
+	//	{
+	//		if (WaitingForPlayers(sock_and_addr->sock)) {
+	//			all_players_connected = true;
+	//			condition = Connection2;
+	//		};
+	//	});*/
+	//
 
-	while (!backPressed) {
+	//while (!backPressed) {
 
-		while (window.pollEvent(event))
-		{
-			if (event.type == Event::Closed)
-				window.close();
-		}
+	//	while (window.pollEvent(event))
+	//	{
+	//		if (event.type == Event::Closed)
+	//			window.close();
+	//	}
 
-		switch (condition)
-		{
-		case Connecting:
-			text.setString(inscriptions[0]);
-			break;
-		case Error:
-			text.setString(inscriptions[1]);
-			break;
-		case Connection:
-			text.setString(inscriptions[2]);
-			break;
-		case Connection2:
-			text.setString(inscriptions[3]);
-			break;
-		default:
-			break;
-		}
-		
-		if (condition == Connection && !all_players_connected) {
-			//thread waitingPlayers([&]()
-			//	{
-					if (WaitingForPlayers(sock_and_addr->sock)) {
-						all_players_connected = true;
-						condition = Connection2;
-					};
-			//	});
-		}
+	//	switch (condition)
+	//	{
+	//	case Connecting:
+	//		text.setString(inscriptions[0]);
+	//		break;
+	//	case Error:
+	//		text.setString(inscriptions[1]);
+	//		break;
+	//	case Connection:
+	//		text.setString(inscriptions[2]);
+	//		break;
+	//	case Connection2:
+	//		text.setString(inscriptions[3]);
+	//		break;
+	//	default:
+	//		break;
+	//	}
+	//	
+	//	if (condition == Connection && !all_players_connected) {
+	//		//thread waitingPlayers([&]()
+	//		//	{
+	//				if (WaitingForPlayers(sock_and_addr->sock)) {
+	//					all_players_connected = true;
+	//					condition = Connection2;
+	//				};
+	//		//	});
+	//	}
 
-		window.clear();
-		window.draw(menuBackground);
-		window.draw(menu);
-		window.draw(back);
-		window.draw(text);
-		window.display();
+	//	window.clear();
+	//	window.draw(menuBackground);
+	//	window.draw(menu);
+	//	window.draw(back);
+	//	window.draw(text);
+	//	window.display();
 
-		if (IntRect(30, 30, 130, 130).contains(Mouse::getPosition(window)))
-		{
-			back.setScale(0.25, 0.25);
-			back.setPosition(18, 18);
-			if (Mouse::isButtonPressed(Mouse::Left)) { 
-				backPressed = true;
-			};
-		}
-		else
-		{
-			back.setScale(0.2, 0.2);
-			back.setPosition(30, 30);
-		}
-		if (Keyboard::isKeyPressed(Keyboard::BackSpace)) backPressed = true;
+	//	if (IntRect(30, 30, 130, 130).contains(Mouse::getPosition(window)))
+	//	{
+	//		back.setScale(0.25, 0.25);
+	//		back.setPosition(18, 18);
+	//		if (Mouse::isButtonPressed(Mouse::Left)) { 
+	//			backPressed = true;
+	//		};
+	//	}
+	//	else
+	//	{
+	//		back.setScale(0.2, 0.2);
+	//		back.setPosition(30, 30);
+	//	}
+	//	if (Keyboard::isKeyPressed(Keyboard::BackSpace)) backPressed = true;
 
-		if (all_players_connected) { 
-			tryingConnect.join();
-			return sock_and_addr->sock; 
-		}
+	//	if (all_players_connected) { 
+	//		tryingConnect.join();
+	//		return sock_and_addr->sock; 
+	//	}
 
-	}
-	tryingConnect.join();
-	return NULL;
-}
+	//}
+	//tryingConnect.join();
+	//return NULL;
+//}
 
 
 void drawingRules(Sprite menuBackground)
@@ -322,7 +445,7 @@ void drawingRules(Sprite menuBackground)
 	}
 }
 
-void drawingWinOrLose(bool& is_the_end_of_play, bool& is_the_player_death, bool& is_the_end_of_program, bool win_or_Lose)
+void drawingWinOrLose(bool& is_the_end_of_program)
 {
 	bool flag = false;
 	Text text("", font);
@@ -336,34 +459,20 @@ void drawingWinOrLose(bool& is_the_end_of_play, bool& is_the_player_death, bool&
 				window.close();
 		}
 
-		if (!win_or_Lose) {
-			window.clear(Color(240, 128, 128));
-			text.setString(L"Вас съели!");
-			text.setCharacterSize(150);
-			text.setFillColor(Color::Red);
-			text.setPosition(view.getCenter().x - 340, view.getCenter().y - 280);
-		}
-		else
-		{
-			window.clear(Color(176, 224, 230));
-			text.setString(L"Вы победили!");
-			text.setCharacterSize(130);
-			text.setFillColor(Color::Blue);
-			text.setPosition(view.getCenter().x - 380, view.getCenter().y - 280);
-		}
+		window.clear(Color(166, 250, 150));
+		text.setString(L"Конец игры");
+		text.setCharacterSize(150);
+		text.setFillColor(Color(64, 255, 0));
+		text.setPosition(view.getCenter().x - 340, view.getCenter().y - 280);
 
 		text.setOutlineThickness(7);
-
 
 		window.setView(view);
 		window.draw(text);
 
-		text.setString(L"Нажмите R чтобы начать новую игру");
 		text.setCharacterSize(40);
 		text.setFillColor(Color::Black);
 		text.setOutlineThickness(0);
-		text.setPosition(view.getCenter().x - 300, view.getCenter().y - 70);
-		window.draw(text);
 
 		text.setString(L"Нажмите пробел чтобы вернуться в меню");
 		text.setPosition(view.getCenter().x - 300, view.getCenter().y);
@@ -375,21 +484,13 @@ void drawingWinOrLose(bool& is_the_end_of_play, bool& is_the_player_death, bool&
 
 		window.display();
 
-		if (Keyboard::isKeyPressed(Keyboard::R))
-		{
-			is_the_end_of_play = false;
-			flag = true;
-		}
 		if (Keyboard::isKeyPressed(Keyboard::Space))
 		{
-			is_the_end_of_play = true;
 			flag = true;
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Escape))
 		{
 			is_the_end_of_program = true;
-			is_the_end_of_play = true;
-			is_the_player_death = true;
 			flag = true;
 		}
 	}
@@ -428,7 +529,34 @@ void eatingEnemy(Player& p, Enemy& e) {
 		if ((((X1 <= X2) && (X1 >= X2 - S2)) || ((X1 >= X2) && (X1 <= X2 + S2))) &&
 			(((Y1 <= Y2) && (Y1 >= Y2 - S2)) || ((Y1 >= Y2) && (Y1 <= Y2 + S2)))) {
 			p.life = false;
-			printf("КТО ТО СДОХ");
+		}
+	}
+}
+
+void eatingEnemy(Player& p, Player& e)
+{
+	float X1 = p.getPlayerCoordX();
+	float Y1 = p.getPlayerCoordY();
+	float X2 = e.getPlayerCoordX();
+	float Y2 = e.getPlayerCoordY();
+	float S1 = p.getPlayerSize();
+	float S2 = e.getPlayerSize();
+
+	if (S1 > S2) {
+		if ((((X2 <= X1) && (X2 >= X1 - S1)) || ((X2 >= X1) && (X2 <= X1 + S1))) &&
+			(((Y2 <= Y1) && (Y2 >= Y1 - S1)) || ((Y2 >= Y1) && (Y2 <= Y1 + S1))))
+		{
+			if (e.life == true) p.size += e.size / 3;
+			p.playerBody.setRadius(p.size);
+			p.playerBody.setPosition(p.x - p.size, p.y - p.size);
+			e.life = false;
+		}
+	}
+
+	if (S1 < S2) {
+		if ((((X1 <= X2) && (X1 >= X2 - S2)) || ((X1 >= X2) && (X1 <= X2 + S2))) &&
+			(((Y1 <= Y2) && (Y1 >= Y2 - S2)) || ((Y1 >= Y2) && (Y1 <= Y2 + S2)))) {
+			p.life = false;
 		}
 	}
 }

@@ -10,11 +10,11 @@ class Client
 
 public:
 	Client(sf::TcpSocket &tcpSocket);
-	void trans();
 	int GetId();
 	void SetId(int value);
+	void DisconnectClient();
 	sf::TcpSocket* GetSocket();
-	sf::Packet getClientInfo();
-	sf::Packet getClientPacket();
+	sf::Packet GetClientInfo();
+	sf::Packet GetClientPacket();
 };
 
