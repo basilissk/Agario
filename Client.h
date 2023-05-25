@@ -13,8 +13,8 @@ public:
 	int GetId();
 	void SetId(int value);
 	void DisconnectClient();
+	void PingServer();
 	sf::TcpSocket* GetSocket();
-	sf::Packet GetClientInfo();
 	sf::Packet GetClientPacket();
 };
 

@@ -2,8 +2,6 @@
 using namespace sf;
 using namespace std;
 
-//TcpListener* listener = new TcpListener();
-
 void Server::StartServer()
 {
 	//Socket::Status status = listener->listen(8888,"192.168.111.70"); 
@@ -23,22 +21,28 @@ void Server::StartServer()
 void Server::WaitingClients()
 {
 	int Id = 0;
-	while (clients.size() < 2) {
-		TcpSocket* tcp_client = new TcpSocket;
-		if (listener->accept(*tcp_client) != sf::Socket::Done) {
-			std::cout << "Ошибка при принятии подключения." << std::endl;
-			continue;
+		while (clients.size() < 2) {
+			TcpSocket* tcp_client = new TcpSocket;
+			if (listener->accept(*tcp_client) != sf::Socket::Done) {
+				std::cout << "Ошибка при принятии подключения." << std::endl;
+				continue;
+			}
+			std::cout << "Подключение принято. IP адрес: " << tcp_client->getRemoteAddress() << std::endl;
+
+			Client* client = new Client(*tcp_client);
+			client->SetId(Id);
+			Id++;
+			clients.push_back(client);
+
+			std::cout << "Клиент добавлен в список подключенных." << std::endl;
 		}
-		std::cout << "Подключение принято. IP адрес: " << tcp_client->getRemoteAddress() << std::endl;
 
-		Client* client = new Client(*tcp_client);
-		client->SetId(Id);
-		Id++;
-		clients.push_back(client);
+}
 
-		std::cout << "Клиент добавлен в список подключенных." << std::endl;
-	}
-
+int Server::GetAmountOfClients() {
+	int amount;
+	amount = clients.size();
+	return amount;
 }
 
 void Server::SendPacketToAllClients(Packet packet)

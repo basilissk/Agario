@@ -15,13 +15,15 @@ public:
 	bool life;
 	sf::CircleShape enemyBody;
 
-	void pos(float X, float Y);
+	void Pos(float X, float Y);
 
-	void move(std::vector<Player*>& players, Enemy B, Food Arr[]);
+	void Move(std::vector<Player*>& players, Enemy B, Food Arr[]);
 
-	float getPlayerCoordX();	
+	void SetEnemyBody();
 
-	float getPlayerCoordY();
+	float GetPlayerCoordX();	
+
+	float GetPlayerCoordY();
 
 	float getPlayerSize();
 

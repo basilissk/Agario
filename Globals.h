@@ -16,7 +16,6 @@ const float mapWidth = 1000;
 const float mapHeight = 1000;
 const float speedCoeff = 0.85;
 
-extern float speedP;
 extern float speedE;
 extern float zoom;
 extern float lineWidth;

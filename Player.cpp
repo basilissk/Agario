@@ -2,34 +2,34 @@
 
 using namespace sf;
 
-void Player::move() {
+void Player::Move() {
 
 	if (Keyboard::isKeyPressed(Keyboard::A)) {
-		if (getPlayerCoordX() - speed - size > 0) x -= speed;
+		if (GetPlayerCoordX() - speed - size > 0) x -= speed;
 	}
 	if (Keyboard::isKeyPressed(Keyboard::D)) {
-		if (getPlayerCoordX() + speed + size < mapWidth) x += speed;
+		if (GetPlayerCoordX() + speed + size < mapWidth) x += speed;
 	}
 	if (Keyboard::isKeyPressed(Keyboard::W)) {
-		if (getPlayerCoordY() - speed - size > 0) y -= speed;
+		if (GetPlayerCoordY() - speed - size > 0) y -= speed;
 	}
 	if (Keyboard::isKeyPressed(Keyboard::S)) {
-		if (getPlayerCoordY() + speed + size < mapHeight) y += speed;
+		if (GetPlayerCoordY() + speed + size < mapHeight) y += speed;
 
 	}
-	getPlayerCoordForView(getPlayerCoordX(), getPlayerCoordY());
+	SetView(GetPlayerCoordX(), GetPlayerCoordY());
 	playerBody.setPosition(x - size, y - size);
 }
 
-float Player::getPlayerCoordX() {
+float Player::GetPlayerCoordX() {
 	return x;
 }
 
-float Player::getPlayerCoordY() {
+float Player::GetPlayerCoordY() {
 	return y;
 }
 
-float Player::getPlayerSize() {
+float Player::GetPlayerSize() {
 	return size;
 }
 
@@ -43,10 +43,10 @@ void Player::setPlayerSize(float size)
 	playerBody.setRadius(size);
 }
 
-void Player::eatingFood() {
-	float xP = getPlayerCoordX();
-	float yP = getPlayerCoordY();
-	float sP = getPlayerSize();
+void Player::EatingFood() {
+	float xP = GetPlayerCoordX();
+	float yP = GetPlayerCoordY();
+	float sP = GetPlayerSize();
 
 	for (int i = 0; i < foodAmount; i++) {
 

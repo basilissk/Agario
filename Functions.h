@@ -4,29 +4,29 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "View.h"
+#include "Server.h"
+#include "Client.h"
 
 using namespace sf;
 
-void drawingMap();
+void DrawingMap();
 
-bool isItVisible(Player p, float X, float Y);
+bool IsItVisible(Player p, float X, float Y);
 
-void eatingEnemy(Player &p, Enemy &e);
+void EatingEnemy(Player &p, Enemy &e);
 
-void eatingEnemy(Player& p, Player& e);
+void EatingEnemy(Player& p, Player& e);
 
-void drawingResults();
+void DrawingResults();
 
-int drawingMenu();
+int DrawingMenu();
 
-void drawingRules(Sprite menuBackground);
+void DrawingRules(Sprite menuBackground);
 
-void drawingWinOrLose(bool & is_the_end_of_program);
+void DrawingEnd(bool & is_the_end_of_program);
 
-void createButton(Text &text, RectangleShape &button);
+void CreateButton(Text &text, RectangleShape &button);
 
-void buttonNotSelected(Text &text, RectangleShape &button);
+void ButtonNotSelected(Text &text, RectangleShape &button);
 
-//int DrawingConnection();
-
-void DrawingConnection();
+bool DrawingConnection(Server &server);

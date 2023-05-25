@@ -40,6 +40,7 @@
     <ProjectGuid>{a724217d-76e4-498a-a46e-13bfb35edcac}</ProjectGuid>
     <RootNamespace>Agario</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Agario server</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'" Label="Configuration">

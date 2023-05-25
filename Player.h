@@ -12,18 +12,18 @@ public:
 	bool life;
 	sf::CircleShape playerBody;
 
-	void move();
+	void Move();
 
-	float getPlayerCoordX();
+	float GetPlayerCoordX();
 
-	float getPlayerCoordY();
+	float GetPlayerCoordY();
 
-	float getPlayerSize();
+	float GetPlayerSize();
 
 	void SetPlayerBody();
 
 	void setPlayerSize(float size);
 
-	void eatingFood();
+	void EatingFood();
 
 };
